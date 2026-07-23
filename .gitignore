@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+env_cansat/
+.venv/
+capturas_guardadas/
+*.csv
+.DS_Store
