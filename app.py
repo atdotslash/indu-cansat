@@ -29,7 +29,8 @@ app = Flask(__name__)
 CAMERA_URL = "http://192.168.4.1/stream"  # Default ESP32-CAM stream URL (INDU-CANSAT network)
 SAVE_DIR = "capturas_guardadas"
 CSV_PATH = "telemetry_log.csv"
-AUTO_SAVE_INTERVAL = 5.0  # Capture visual backup stack every 5 seconds
+AUTO_SAVE_ENABLED = False  # Set to True to enable periodic auto-saved snapshots
+AUTO_SAVE_INTERVAL = 5.0  # Capture visual backup stack every 5 seconds (if AUTO_SAVE_ENABLED is True)
 TARGET_FPS = 15
 
 # Thread-safe global frame buffers and metrics cache
@@ -653,14 +654,15 @@ def background_processor():
                     ])
                     
             # Handle automatic snapshot backup every AUTO_SAVE_INTERVAL seconds
-            now = time.time()
-            if now - last_save_time >= AUTO_SAVE_INTERVAL:
-                timestamp_file = time.strftime('%Y%m%d_%H%M%S')
-                save_filename = os.path.join(SAVE_DIR, f"cansat_{timestamp_file}.jpg")
-                # Save a side-by-side stack: [RGB Feed, VARI Heatmap]
-                h_stack = np.hstack((rgb_hud, heatmap_hud))
-                cv2.imwrite(save_filename, h_stack)
-                last_save_time = now
+            if AUTO_SAVE_ENABLED:
+                now = time.time()
+                if now - last_save_time >= AUTO_SAVE_INTERVAL:
+                    timestamp_file = time.strftime('%Y%m%d_%H%M%S')
+                    save_filename = os.path.join(SAVE_DIR, f"cansat_{timestamp_file}.jpg")
+                    # Save a side-by-side stack: [RGB Feed, VARI Heatmap]
+                    h_stack = np.hstack((rgb_hud, heatmap_hud))
+                    cv2.imwrite(save_filename, h_stack)
+                    last_save_time = now
                 
         # Enforce exact telemetry update rate matching target FPS
         elapsed = time.time() - start_time
