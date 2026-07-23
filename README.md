@@ -10,18 +10,18 @@ El proyecto consta de tres módulos de software principales desarrollados en Pyt
 
 ```mermaid
 graph TD
-    ESP32[ESP32-CAM (WiFi/RF)] -->|MJPEG Stream| SC[stream_capture.py]
-    Mock[Scrolling Terrain Generator] -->|Mock Frames (Fallback)| SC
-    SC -->|Raw RGB Frames| IP[image_processor.py]
+    ESP32["ESP32-CAM (WiFi/RF)"] -->|MJPEG Stream| SC["stream_capture.py"]
+    Mock["Scrolling Terrain Generator"] -->|"Mock Frames (Fallback)"| SC
+    SC -->|Raw RGB Frames| IP["image_processor.py"]
     IP -->|Vectorized NumPy Processing| IP
     IP -->|1. VARI Index Calculation| IP
     IP -->|2. ExG Index Calculation| IP
     IP -->|3. Soil Classification Mask| IP
     IP -->|4. JET Heatmap & HUD Overlay| IP
-    IP -->|Processed Frames & Metrics| App[app.py (Flask Server)]
-    App -->|Local Logging| CSV[(telemetry_log.csv)]
-    App -->|Image Archiving| Disk[(capturas_guardadas/)]
-    App -->|Server-Sent Events & Streams| Dash[Dashboard Web (HTML5/CSS3/JS)]
+    IP -->|Processed Frames & Metrics| App["app.py (Flask Server)"]
+    App -->|Local Logging| CSV[("telemetry_log.csv")]
+    App -->|Image Archiving| Disk[("capturas_guardadas/")]
+    App -->|Server-Sent Events & Streams| Dash["Dashboard Web (HTML5/CSS3/JS)"]
 ```
 
 ### Componentes de Software
