@@ -26,7 +26,7 @@ from image_processor import process_frame
 app = Flask(__name__)
 
 # System Configurations
-CAMERA_URL = "http://192.168.4.1/stream"  # Default ESP32-CAM stream URL (INDU-CANSAT network)
+CAMERA_URL = "http://192.168.4.1:81/stream"  # Default ESP32-CAM stream URL (INDU-CANSAT network)
 SAVE_DIR = "capturas_guardadas"
 CSV_PATH = "telemetry_log.csv"
 AUTO_SAVE_ENABLED = False  # Set to True to enable periodic auto-saved snapshots

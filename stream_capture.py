@@ -22,7 +22,7 @@ class ESP32CamStream:
     Manages the connection and decoding of the MJPEG stream from the ESP32-CAM.
     Runs in a background thread to prevent blocking the main server threads.
     """
-    def __init__(self, stream_url="http://192.168.4.1/stream", mock_fallback=True):
+    def __init__(self, stream_url="http://192.168.4.1:81/stream", mock_fallback=True):
         self.stream_url = stream_url
         self.mock_fallback = mock_fallback
         self.is_running = False
